@@ -6,8 +6,13 @@
 		"android": "react-native run-android",
 		"ios": "react-native run-ios",
 		"lint": "eslint .",
+		"android:release": "react-native run-android --mode=release",
+		"build:android:aab": "cd android && gradlew bundleRelease && cd app/build/outputs/bundle/release && explorer .",
+		"build:android:apk": "cd android && gradlew assembleRelease && cd app/build/outputs/apk/release && explorer .",
+		"ios:release": "react-native run-ios --mode Release",
 		"start": "react-native start",
-		"test": "jest"
+		"test": "jest",
+		"gradle:clear": "cd android && gradlew clean"
 	},
 	"dependencies": {
 		"@react-native-async-storage/async-storage": "^2.2.0",
