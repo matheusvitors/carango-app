@@ -1,1 +1,2 @@
-export * from './system-name'
+export * from './forms'
+export * from './general'
