@@ -1,32 +1,30 @@
-import React, { PropsWithChildren } from 'react';
-import { KeyboardAvoidingView, StyleProp, View, ViewStyle } from 'react-native';
-import styled from 'styled-components/native';
+import React, { PropsWithChildren, useEffect, useState } from "react";
+import { Keyboard, KeyboardAvoidingView, Platform, StyleProp, ViewStyle } from "react-native";
 
-export const Form: React.FC<PropsWithChildren> = ({children}) => {
+export const Form: React.FC<PropsWithChildren> = ({ children }) => {
+	const [isKeyboardAppearing, setIsKeyboardAppearing] = useState(false);
+
+	useEffect(() => {
+		const keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => setIsKeyboardAppearing(true))
+		const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => setIsKeyboardAppearing(false))
+
+		return () => {
+			keyboardHideListener.remove();
+			keyboardShowListener.remove();
+		}
+	}, []);
 
 	const keyboardAvoidingViewStyles: StyleProp<ViewStyle> = {
-		// display: flex
-		width: '100%',
-		height: '100%',
-		backgroundColor: 'red',
-		borderWidth: 1
-	}
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100%",
+		borderWidth: 1,
+	};
 
 	return (
-		<Container>
-		{/* <KeyboardAvoidingView style={keyboardAvoidingViewStyles}> */}
+		<KeyboardAvoidingView  behavior={"height"} enabled={isKeyboardAppearing}>
 			{children}
-		</Container>
+		</KeyboardAvoidingView>
 	);
-}
-
-const Container = styled.KeyboardAvoidingView`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	/* border: 1px solid red; */
-	width: '100%';
-	height: '100%';
-	background-color: 'red';
-`
+};

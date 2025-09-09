@@ -3,7 +3,7 @@ import { ThemeProvider } from "styled-components";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import dark from "@/ui/styles/themes/dark";
 import light from "@/ui/styles/themes/light";
-import { KEY_THEME } from "@/infra/config/storage-keys";
+import { KEY } from "@/infra/config/storage-keys";
 import { useSystemTheme } from "@/ui/hooks";
 
 interface ThemeContextProps {
@@ -30,7 +30,7 @@ export const SystemThemeProvider: React.FC<{children: ReactNode}> = ({ children 
 	const loadTheme = async () => {
 		const savedTheme = await getTheme();
 		if(!savedTheme) {
-			await AsyncStorage.setItem(KEY_THEME, 'light');
+			await AsyncStorage.setItem(KEY.THEME, 'light');
 		}
 		setTheme(savedTheme ? savedTheme : 'light');
 	}

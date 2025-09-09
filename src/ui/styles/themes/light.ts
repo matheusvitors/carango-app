@@ -27,7 +27,7 @@ const light = {
 		success: '#46B93C',
 		attention: '#EDC531',
 		warning: '#C92020',
-		info: '#3185FC'
+		info: accent
 	},
 
 	login: {
