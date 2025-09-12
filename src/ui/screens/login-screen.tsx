@@ -2,22 +2,15 @@ import React, { useEffect, useState } from "react";
 import styled, { useTheme } from "styled-components/native";
 import { Button, SystemName, TextField } from "@/ui/components";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { useKeyboard } from "@/ui/hooks";
 
 export const LoginScreen: React.FC = () => {
 
 	const theme = useTheme();
+	const { isKeyboardAppearing } = useKeyboard();
 
-	const [isKeyboardAppearing, setIsKeyboardAppearing] = useState(false);
-
-	useEffect(() => {
-		const keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => setIsKeyboardAppearing(true))
-		const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => setIsKeyboardAppearing(false))
-
-		return () => {
-			keyboardHideListener.remove();
-			keyboardShowListener.remove();
-		}
-	}, [])
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -27,8 +20,8 @@ export const LoginScreen: React.FC = () => {
 				</Header>
 
 				<Content>
-					<TextField label='Username' leftIcon='user' />
-					<TextField label='Senha' secureTextEntry leftIcon='key' />
+					<TextField label='Username' leftIcon='user' value={username} onChangeText={(text) => setUsername(text)} />
+					<TextField label='Senha' secureTextEntry leftIcon='key' value={password} onChangeText={(text) => setPassword(text)} />
 					<Button label="Entrar" onPress={() => {}} />
 				</Content>
 			</Container>
