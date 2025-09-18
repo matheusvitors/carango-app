@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { HomeScreen, LoginScreen } from '@/ui/screens';
 
 export type RootStackParamsList = {
@@ -12,6 +12,9 @@ export type RootStackParamsList = {
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamsList>();
+
+export type RootStackScreenProps = NativeStackNavigationProp<RootStackParamsList>;
+
 
 export const Router: React.FC = () => {
 
