@@ -6,28 +6,18 @@ import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
 import { useAuthentication } from "@/ui/contexts";
 import { RootStackScreenProps } from "@/Router";
+import { useKeyboard } from "@/ui/hooks";
 
 export const LoginScreen: React.FC = () => {
 
 	const theme = useTheme();
 	const { login } = useAuthentication();
 	const navigation = useNavigation<RootStackScreenProps>();
+	const { isKeyboardAppearing } = useKeyboard();
 
-
-	const [isKeyboardAppearing, setIsKeyboardAppearing] = useState(false);
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-
-	useEffect(() => {
-		const keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => setIsKeyboardAppearing(true))
-		const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => setIsKeyboardAppearing(false))
-
-		return () => {
-			keyboardHideListener.remove();
-			keyboardShowListener.remove();
-		}
-	}, []);
 
 	const onSubmit = async () => {
 		try {
