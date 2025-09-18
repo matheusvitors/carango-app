@@ -16,8 +16,6 @@ export const TextField: React.FC<TextFieldProps> = ({ label, leftIcon, rightIcon
 	centerWidth = leftIcon ? centerWidth - 10 : centerWidth;
 	centerWidth = rightIcon ? centerWidth - 10 : centerWidth;
 
-	console.log(label, centerWidth);
-
 	return (
 		<Container>
 			<Label>{label}</Label>

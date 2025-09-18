@@ -81,7 +81,7 @@ export const Button: React.FC<CustomButtonProps> = ({label, loading, opacity, cu
 					</Content>
 				</Container>
 			:
-				<LoadingContainer width={width || '100%'}>
+				<LoadingContainer width={width || '90%'}>
 					<ActivityIndicator color={theme.button.text} />
 				</LoadingContainer>
 		}</>
@@ -120,7 +120,7 @@ const LoadingContainer = styled.View<ButtonContainerProps>`
 
     background-color: ${props => props.theme.button.background};
 
-    border-radius: 25px;
+    border-radius: 10px;
 
 `;
 

@@ -14,7 +14,7 @@ interface AuthContextProps {
 const DEFAULT_VALUES: AuthContextProps = {
 	token: null,
 	isAuthenticated: false,
-	login: async (credentials: Credentials) => {},
+	login: async (credentials: Credentials) => { console.log('nops')},
 	logout: async () => {},
 };
 
@@ -54,7 +54,11 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
 
 	const login = async (credentials: Credentials) => {
 		try {
+			console.log(credentials);
+
 			const token = await authenticate(credentials);
+			console.log({token});
+
 			setToken(token);
 			setIsAuthenticated(true);
 			// queryClient.removeQueries();
@@ -75,7 +79,7 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
 		}
 	};
 
-	return <AuthContext.Provider value={{ token, isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
+	return (<AuthContext.Provider value={{ token, isAuthenticated, login, logout }}>{children}</AuthContext.Provider>);
 };
 
 export const useAuthentication = () => {

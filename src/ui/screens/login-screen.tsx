@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled, { useTheme } from "styled-components/native";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
@@ -22,10 +22,14 @@ export const LoginScreen: React.FC = () => {
 	const onSubmit = async () => {
 		try {
 			setIsLoading(true);
+			console.log({username, password});
+
 			await login({username, password});
-			navigation.navigate('Home');
+			// navigation.navigate('Home');
+			Alert.alert('ok!!!')
 		} catch (error) {
 			httpErrorHandler(error, 'Login - onSubmit',)
+			Alert.alert('Erro!!!')
 		} finally {
 			setIsLoading(false);
 		}

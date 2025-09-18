@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { storage } from "@/infra/adapters";
 import { API_URL } from "@/infra/config/environment";
 import { KEY } from "@/infra/config/storage-keys";
-import { authenticateUser, isAuthenticated } from "@/application/services";
+import { authenticate } from "@/application/services";
 
 console.info('API URL', API_URL);
 
@@ -12,8 +12,8 @@ export const http = axios.create({
 });
 
 http.interceptors.request.use(async (config) => {
-	if (config.url !== "/auth") {
-		let token = await isAuthenticated();
+	if (config.url !== "/login") {
+		let token = await storage.get(KEY.TOKEN);
 
 		config.headers = config.headers || {};
 		config.headers.Authorization = token ? `Bearer ${token}` : "";
@@ -118,7 +118,7 @@ http.interceptors.response.use(
 				try {
 					const credentials = await storage.get(KEY.CREDENTIALS);
 					if(credentials) {
-						const token = await authenticateUser(credentials);
+						const token = await authenticate(credentials);
 						if (error.config) {
 							error.config.headers.Authorization = token;
 						}
