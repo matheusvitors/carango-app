@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthContextProvider, SystemThemeProvider } from "@/ui/contexts";
+import { AuthContextProvider, SnackbarContextProvider, SystemThemeProvider } from "@/ui/contexts";
 import { Router } from "@/Router";
 
 export const App: React.FC = () => {
@@ -8,7 +8,9 @@ export const App: React.FC = () => {
 	return (
 		<SystemThemeProvider>
 			<AuthContextProvider>
-				<Router />
+				<SnackbarContextProvider>
+					<Router />
+				</SnackbarContextProvider>
 			</AuthContextProvider>
 		</SystemThemeProvider>
 	);

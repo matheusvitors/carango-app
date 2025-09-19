@@ -4,7 +4,7 @@ import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
-import { useAuthentication } from "@/ui/contexts";
+import { useAuthentication, useSnackbar } from "@/ui/contexts";
 import { RootStackScreenProps } from "@/Router";
 import { useKeyboard } from "@/ui/hooks";
 
@@ -14,6 +14,7 @@ export const LoginScreen: React.FC = () => {
 	const { login } = useAuthentication();
 	const navigation = useNavigation<RootStackScreenProps>();
 	const { isKeyboardAppearing } = useKeyboard();
+	const { notify } = useSnackbar();
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -22,14 +23,12 @@ export const LoginScreen: React.FC = () => {
 	const onSubmit = async () => {
 		try {
 			setIsLoading(true);
-			console.log({username, password});
-
-			await login({username, password});
+			// await login({username, password});
 			// navigation.navigate('Home');
-			Alert.alert('ok!!!')
+			notify('ok!!!', "success");
 		} catch (error) {
 			httpErrorHandler(error, 'Login - onSubmit',)
-			Alert.alert('Erro!!!')
+			notify('Erro!!!', 'warning');
 		} finally {
 			setIsLoading(false);
 		}
