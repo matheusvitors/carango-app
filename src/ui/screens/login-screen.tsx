@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled, { useTheme } from "styled-components/native";
-import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
 import { useAuthentication, useSnackbar } from "@/ui/contexts";
 import { RootStackScreenProps } from "@/Router";
 import { useKeyboard } from "@/ui/hooks";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const LoginScreen: React.FC = () => {
 
@@ -15,6 +16,7 @@ export const LoginScreen: React.FC = () => {
 	const navigation = useNavigation<RootStackScreenProps>();
 	const { isKeyboardAppearing } = useKeyboard();
 	const { notify } = useSnackbar();
+	const insets = useSafeAreaInsets();
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -36,7 +38,7 @@ export const LoginScreen: React.FC = () => {
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-			<Container behavior="height" enabled={isKeyboardAppearing} >
+			<Container behavior="height" enabled={isKeyboardAppearing}>
 				<Header>
 					<SystemName height={65} color={theme.colors.primary} />
 				</Header>

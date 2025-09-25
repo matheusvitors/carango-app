@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Animated, StyleProp, Text, ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components/native';
 
 export interface SnackbarProps {
@@ -15,6 +16,7 @@ export type snackbarTypes = 'primary' | 'accent' | 'success' | 'warning' | 'atte
 export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, isVisible, type, setIsVisible }) => {
 
 	const theme = useTheme();
+	const insets = useSafeAreaInsets();
 
 	const [animation, setAnimation] = useState(new Animated.Value(0));
 
@@ -39,7 +41,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, 
 			toValue: 1,
 			duration: 300,
 			useNativeDriver: true
-		})
+		}).start();
 		console.log('open');
 	}
 
@@ -49,7 +51,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, 
 				toValue: 0,
 				duration: 300,
 				useNativeDriver: true
-			})
+			}).start();
 			console.log('close');
 			setIsVisible(false);
 		}, time);
@@ -63,11 +65,10 @@ export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, 
 	const styles: StyleProp<ViewStyle> = {
 		position: 'absolute',
 		height: 72,
-		bottom: 10,
+		bottom: !isVisible ? 10 : insets.bottom + 15,
 		left: 5,
 		right: 5,
-		backgroundColor: theme.colors.primary,
-		// backgroundColor: colorScheme.background || theme.colors.primary,
+		backgroundColor: colorScheme.background || theme.colors.secondary,
 		padding: 16,
 		borderRadius: 5,
 		flexDirection: 'row',
