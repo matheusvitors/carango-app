@@ -105,7 +105,7 @@ http.interceptors.response.use(
 	},
 
 	async (error: AxiosError | Error): Promise<AxiosError> => {
-		if (axios.isAxiosError(error)) {
+		if (axios.isAxiosError(error) && error.config?.url !== '/login') {
 			const originalRequest = error.config as AxiosRequestConfig ?? {}
 
 			const { message } = error;

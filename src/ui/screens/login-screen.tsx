@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styled, { useTheme } from "styled-components/native";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
 import { useAuthentication, useSnackbar } from "@/ui/contexts";
 import { RootStackScreenProps } from "@/Router";
 import { useKeyboard } from "@/ui/hooks";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const LoginScreen: React.FC = () => {
 
@@ -22,18 +23,24 @@ export const LoginScreen: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
+
 	const onSubmit = async () => {
 		try {
 			setIsLoading(true);
-			// await login({username, password});
-			// navigation.navigate('Home');
+			await login({username, password});
+			navigation.popToTop();
+			navigation.navigate('ProtectedRoutes');
 			notify('ok!!!', "success");
-		} catch (error) {
+		} catch (error: any) {
 			httpErrorHandler(error, 'Login - onSubmit',)
-			notify('Erro!!!', 'warning');
+			notify(error.message, 'warning');
 		} finally {
 			setIsLoading(false);
 		}
+	}
+
+	const formValidation = () => {
+		return username.length > 2 && password.length > 2;
 	}
 
 	return (
@@ -46,7 +53,7 @@ export const LoginScreen: React.FC = () => {
 				<Content>
 					<TextField label='Username' leftIcon='user' value={username} onChangeText={(text) => setUsername(text)} />
 					<TextField label='Senha' secureTextEntry leftIcon='key' value={password} onChangeText={(text) => setPassword(text)} />
-					<Button label="Entrar" onPress={onSubmit} loading={isLoading} />
+					<Button label="Entrar" onPress={onSubmit} loading={isLoading} disabled={!formValidation()} />
 				</Content>
 			</Container>
 		</TouchableWithoutFeedback>
