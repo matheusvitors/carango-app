@@ -1,5 +1,7 @@
-const prefix = '@acheitrf1'
+const prefix = '@carango'
 
-export const KEY_THEME = `${prefix}:theme`
-export const KEY_TOKEN = `${prefix}:token`
-
+export const KEY = {
+	THEME: `${prefix}:theme`,
+	TOKEN: `${prefix}:token`,
+	CREDENTIALS: `${prefix}:credentials`,
+}

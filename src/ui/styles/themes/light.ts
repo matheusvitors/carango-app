@@ -1,11 +1,8 @@
 import { StatusBarStyle } from "react-native"
 
-const primary = '#062460'
-const secondary = '#0A5F2E'
-const accent = '#93938C'
-// const primary = '#184E77'
-// const secondary = '#34A0A4'
-// const accent = '#D9ED92'
+const primary = '#DB5445'
+const secondary = '#474c3d'
+const accent = '#b5a289'
 const black = '#141414'
 const white = '#fcfcfc'
 
@@ -22,15 +19,15 @@ const light = {
 	},
 
 	common: {
-		background: '#FEFEFE',
-		text: black
+		background: '#e0d9c9',
+		text: '#272A22'
 	},
 
 	semantic: {
 		success: '#46B93C',
 		attention: '#EDC531',
 		warning: '#C92020',
-		info: '#3185FC'
+		info: accent
 	},
 
 	login: {
