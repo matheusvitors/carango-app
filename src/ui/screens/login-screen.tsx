@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled, { useTheme } from "styled-components/native";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
@@ -17,7 +16,6 @@ export const LoginScreen: React.FC = () => {
 	const navigation = useNavigation<RootStackScreenProps>();
 	const { isKeyboardAppearing } = useKeyboard();
 	const { notify } = useSnackbar();
-	const insets = useSafeAreaInsets();
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -28,7 +26,6 @@ export const LoginScreen: React.FC = () => {
 		try {
 			setIsLoading(true);
 			await login({username, password});
-			navigation.popToTop();
 			navigation.navigate('ProtectedRoutes');
 			notify('ok!!!', "success");
 		} catch (error: any) {

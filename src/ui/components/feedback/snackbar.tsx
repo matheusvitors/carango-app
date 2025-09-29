@@ -33,7 +33,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, 
 	useEffect(() => {
 		isVisible && open();
 		isVisible && !dismissButtonText && close(3000);
-		console.log({isVisible});
 	}, [isVisible]);
 
 	const open = () => {
@@ -42,7 +41,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, 
 			duration: 300,
 			useNativeDriver: true
 		}).start();
-		console.log('open');
 	}
 
 	const close = (time: number) => {
@@ -52,7 +50,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({ message, dismissButtonText, 
 				duration: 300,
 				useNativeDriver: true
 			}).start();
-			console.log('close');
 			setIsVisible(false);
 		}, time);
 	}
