@@ -4,10 +4,7 @@ import { KEY } from "@/infra/config";
 
 export const authenticate = async (credencials: Credentials) => {
 	try {
-		console.log('chamou');
-
 		const response = await http.post<{token: string;}>('/login', credencials);
-		console.log(response);
 
 		await storage.set(KEY.TOKEN, { data: response.data.token });
 		await storage.remove(KEY.CREDENTIALS);
