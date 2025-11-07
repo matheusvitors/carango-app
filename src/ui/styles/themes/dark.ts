@@ -29,6 +29,8 @@ const dark = {
 		warning: '#C92020',
 	},
 
+	themeIcon: '#f7da9c',
+
 	login: {
 		background: black,
 		text: white

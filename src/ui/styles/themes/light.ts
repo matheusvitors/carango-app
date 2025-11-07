@@ -30,6 +30,8 @@ const light = {
 		info: accent
 	},
 
+	themeIcon: '#03215a',
+
 	login: {
 		background: white,
 		text: black

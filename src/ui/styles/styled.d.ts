@@ -30,6 +30,8 @@ declare module 'styled-components/native' {
 			info: string
 		},
 
+		themeIcon: string;
+
 		login: {
 			background: string,
 			text: string
