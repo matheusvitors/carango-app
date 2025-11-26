@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import styled, { useTheme } from "styled-components/native";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import { Button, SystemName, TextField } from "@/ui/components";
 import { httpErrorHandler } from "@/infra/adapters";
 import { useAuthentication, useSnackbar } from "@/ui/contexts";
-import { RootStackScreenProps } from "@/Router";
 import { useKeyboard } from "@/ui/hooks";
 
 export const LoginScreen: React.FC = () => {
 
 	const theme = useTheme();
 	const { login } = useAuthentication();
-	const navigation = useNavigation<RootStackScreenProps>();
 	const { isKeyboardAppearing } = useKeyboard();
 	const { notify } = useSnackbar();
 
@@ -21,13 +18,11 @@ export const LoginScreen: React.FC = () => {
 	const [password, setPassword] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
-
 	const onSubmit = async () => {
 		try {
 			setIsLoading(true);
 			await login({username, password});
-			navigation.navigate('ProtectedRoutes');
-			notify('ok!!!', "success");
+			// notify('ok!!!', "success");
 		} catch (error: any) {
 			httpErrorHandler(error, 'Login - onSubmit',)
 			notify(error.message, 'warning');

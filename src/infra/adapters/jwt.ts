@@ -1,24 +1,26 @@
 import { jwtDecode } from "jwt-decode"
 
-export interface JwtData {
-	iss: string
-	iat: number
-	exp: number
-	nbf: number
-	jti: string
-	sub: any
-	prv: string
-	no_usuario: string
-	ds_username_usuario: string
-	ds_email_usuario: string
-	ds_setor_usuario: any
-	secsubsec_usuario: string
-	primary_key: number
+export interface JwtPayload {
+		id: string;
+		auth: boolean;
 }
 
-export const jwt = (token: string): JwtData => {
+export interface JwtData {
+	iss: string;
+	iat: number;
+	exp: number;
+	nbf: number;
+	jti: string;
+	sub: any;
+	prv: string;
+	payload: JwtPayload;
+}
+
+export const jwt = (token: string): JwtPayload => {
 	try {
-		return jwtDecode<JwtData>(token);
+		console.log('jwt', jwtDecode<JwtData>(token));
+
+		return jwtDecode<JwtData>(token).payload;
 	} catch (error) {
 		console.error('jwt', error);
 		//TODO: adaptar os erros para seguir a doc do JwtDecode -> https://www.npmjs.com/package/jwt-decode

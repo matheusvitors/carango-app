@@ -17,7 +17,7 @@ export const httpErrorHandler = (error: any, from: string): HttpError => {
 	if(error instanceof AxiosError) {
 		if(error.response){
 			errorType = errors[error.response.status];
-			error.response.status !== 401 && console.error('[Failed request] => ', JSON.stringify(error.request))
+			// error.response.status !== 401 && console.error('[Failed request] => ', JSON.stringify(error.request))
 		} else {
 			errorType = errors[500]
 		}
@@ -27,6 +27,6 @@ export const httpErrorHandler = (error: any, from: string): HttpError => {
 		}
 	}
 
-	console.error(`[HTTP-ERROR-HANDLER] [${from}] => `, error, errorType, error.message);
+	// console.error(`[HTTP-ERROR-HANDLER] [${from}] => `, error, errorType, error.message);
 	return errorType;
 }

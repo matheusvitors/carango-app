@@ -1,5 +1,5 @@
 import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
-import { httpErrorHandler, storage } from "@/infra/adapters";
+import { httpErrorHandler, jwt, storage } from "@/infra/adapters";
 import { KEY } from "@/infra/config";
 import { Credentials } from "@/application/interfaces";
 import { authenticate } from "@/application/services";
@@ -7,6 +7,7 @@ import { authenticate } from "@/application/services";
 interface AuthContextProps {
 	token: string | null;
 	isAuthenticated: boolean;
+	userId?: string;
 	login: (credentials: Credentials) => Promise<void>;
 	logout: () => Promise<void>;
 }
@@ -23,10 +24,21 @@ const AuthContext = createContext<AuthContextProps>(DEFAULT_VALUES);
 export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const [token, setToken] = useState<string | null>(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [userId, setUserId] = useState<string>();
 
 	useEffect(() => {
 		verifyAuthentication();
 	}, []);
+
+	useEffect(() => {
+		console.log({token});
+
+		token && token.length > 0 && setUserId(jwt(token).id);
+	}, [token])
+
+	useEffect(() => {
+		console.log('userId', userId)
+	}, [userId])
 
 	const verifyAuthentication = async () => {
 		try {
@@ -54,10 +66,10 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
 
 	const login = async (credentials: Credentials) => {
 		try {
-			const token = await authenticate(credentials);
-
-			setToken(token);
+			const tokens = await authenticate(credentials);
+			setToken(tokens.token);
 			setIsAuthenticated(true);
+			tokens && setUserId(jwt(tokens.token).id);
 			// queryClient.removeQueries();
 		} catch (error) {
 			throw httpErrorHandler(error, "AuthContext - Login");
@@ -76,7 +88,7 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
 		}
 	};
 
-	return (<AuthContext.Provider value={{ token, isAuthenticated, login, logout }}>{children}</AuthContext.Provider>);
+	return (<AuthContext.Provider value={{ token, isAuthenticated, userId, login, logout }}>{children}</AuthContext.Provider>);
 };
 
 export const useAuthentication = () => {
